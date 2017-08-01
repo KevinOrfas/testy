@@ -6,11 +6,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>DOM Testing Example</title>
+  <title>Chat</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <h1>Hello world</h1>
+  <div id="content">
+    <div id="room"></div>
+    <div id="room-list"></div>
+    <div id="messages"></div>
+
+    <form id="send-form">
+      <input type="text" id="send-message">
+      <input type="submit" id="send-button" value="send">
+
+      <div id="help">
+        Chat commands
+        <ul>
+          <li>Change nickname: <code>/nick [username]</code> </li>
+          <li>Join create room <code>/join [room name]</code> </li>
+        </ul>
+      </div>
+    </form>
+  </div>
+
+  <script src="bundle.js"></script>
 </body>
 
 </html>

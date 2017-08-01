@@ -1,19 +1,19 @@
 const http = require('http');
 
-exports.getPage = function (url, callback) {
+exports.getPage = (url, callback) => {
   const request = http.get(url);
-  request.on('response', function (response) {
+  request.on('response', (response) => {
     let error = null;
     let responseText = '';
     response.setEncoding('utf8');
 
-    response.on('data', function (chunk) {
+    response.on('data', (chunk) => {
       responseText += chunk;
     });
-    response.on('error', function (err) {
+    response.on('error', (err) => {
       error = err;
     });
-    response.on('end', function () {
+    response.on('end', () => {
       callback(error, response, responseText);
     });
   });

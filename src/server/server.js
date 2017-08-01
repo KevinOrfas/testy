@@ -1,16 +1,63 @@
-const httpServer = require('http-server');
+
+
+const http = require('http');
+const fs = require('fs');
+
+const path = require('path');
+const mime = require('mime');
+
+const cache = {};
+const PORT = 5000;
 let server;
 
 exports.start = (portNumber, dirToServe, callback) => {
-  server = httpServer.createServer({
-    root: dirToServe
-  });
-  server.listen(portNumber, callback);
+  server = http.createServer((request, response) => {
+    let filePath = false;
+
+    if (request.url === '/') {
+      filePath = `${dirToServe}/index.html`;
+    } else {
+      filePath = `${dirToServe}` + request.url;
+    }
+
+    const absPath = filePath;
+    serveStatic(response, cache, absPath);
+  }).listen(PORT, callback);
 };
 
 exports.stop = (callback) => {
-  // Technically, we're poking into HttpServer's private data here. Bad us. The http-server module is just a
-  // placeholder, and it doesn't have a callback for server.close(). Bad http-server. So don't use this code.
-  // Write something better.
-  server.server.close(callback);
+  server.close(callback);
 };
+
+
+function send404(response) {
+  response.writeHead(404, { 'Content-Type': 'text/plain' });
+  response.write('Error 404: resource not found');
+  response.end();
+}
+
+function sendFile(response, filePath, fileContents) {
+  response.writeHead(200, { 'Content-Type': mime.lookup(path.basename(filePath)) });
+  response.end(fileContents);
+}
+
+function serveStatic(response, cache, absPath) {
+  if (cache[absPath]) {
+    sendFile(response, absPath, cache[absPath]);
+  } else {
+    fs.exists(absPath, (exists) => {
+      if (exists) {
+        fs.readFile(absPath, (err, data) => {
+          if (err) {
+            send404(response);
+          } else {
+            cache[absPath] = data;
+            sendFile(response, absPath, data);
+          }
+        });
+      } else {
+        send404(response);
+      }
+    });
+  }
+}
