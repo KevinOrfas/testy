@@ -1,0 +1,9 @@
+# Mac OS
+.DS_Store
+
+# Generated folder
+generated
+.bin
+
+# npm modules
+node_modules/
