@@ -23,7 +23,7 @@ module.exports = function (config) {
     plugins: [
       'karma-mocha',
       'karma-chai',
-      'karma-commonjs',
+      'karma-spec-reporter',
       'karma-babel-preprocessor',
       'karma-browserify'
     ],
@@ -42,7 +42,7 @@ module.exports = function (config) {
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: ['dots'],
+    reporters: ['spec'],
 
 
     // web server port

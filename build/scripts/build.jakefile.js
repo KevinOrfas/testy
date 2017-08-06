@@ -13,7 +13,7 @@ const opn = require('opn');
 const KARMA_CONFIG = './build/config/karma.conf.js';
 const MOCHA_CONFIG = {
   ui: 'bdd',
-  reporter: 'dot'
+  reporter: 'spec'
 };
 
 const serverFiles = 'src/*.js build/**/*.js';
@@ -78,7 +78,7 @@ task('testServer', [paths.testDir], () => {
 }, { async: true });
 
 task('testClient', function () {
-  console.log('Testing browser code: ');
+  process.stdout.write('Testing browser code: ');
   karma.runTests({
     configFile: KARMA_CONFIG,
     browsers: browsers,
