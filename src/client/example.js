@@ -8,3 +8,17 @@ export function validateTextField(field) {
     field.setAttribute('class', REQUIRED_FIELD_CLASS);
   }
 }
+
+export function extractMe(string, initPoint, endPoint) {
+  const start = string.indexOf(initPoint);
+  const end = string.indexOf(endPoint, start + 1);
+
+  const result = string.substring(start + 1, end).split(',');
+  result.forEach((element, index, array) => {
+    array[index] = element.trim();
+  });
+  return result;
+
+
+
+}

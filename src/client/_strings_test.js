@@ -1,10 +1,14 @@
 mocha.setup({ ignoreLeaks: true });
 
+import { extractMe } from './example';
+
 describe('Strings recipes', () => {
 
 
-  it('Init', () => {
-    expect(1).to.equal(1);
+  it('should extract list of a string', () => {
+    const result = extractMe('yo: dude, mate, lad.', ':', '.');
+    expect(result).to.be.instanceof(Array);
+    expect(['dude', 'mate', 'lad']).to.eql(result);
   });
 
 });
